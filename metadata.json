@@ -1,0 +1,6 @@
+{
+  "name": "Natural Dyes & Botanical Color Guide",
+  "description": "An archival guide to natural dyes sourced from food waste—onion skins, avocado pits, pomegranate rinds, and turmeric—featuring DIY guides, color-fastness ratings, and recipe charts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

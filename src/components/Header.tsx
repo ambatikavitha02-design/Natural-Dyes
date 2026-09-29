@@ -5,9 +5,15 @@ interface HeaderProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
   journalCount: number;
+  onOpenAiChat: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, journalCount }) => {
+export const Header: React.FC<HeaderProps> = ({
+  activeSection,
+  onNavigate,
+  journalCount,
+  onOpenAiChat,
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -59,17 +65,26 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, journ
         </nav>
 
         {/* Zone 3: 1-2 primary actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={onOpenAiChat}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded border border-[#8C5A37]/40 bg-[#F4EFE6] text-[#24211D] hover:bg-[#8C5A37] hover:text-[#FAF7F2] transition-colors whitespace-nowrap cursor-pointer shadow-2xs group"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#8C5A37] group-hover:text-white" />
+            <span>AI Dyer</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="n8n webhook connected" />
+          </button>
+
           <button
             onClick={() => handleNavClick('journal')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium rounded border transition-colors whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded border transition-colors whitespace-nowrap ${
               activeSection === 'journal'
                 ? 'bg-[#2B2620] text-[#FAF7F2] border-[#2B2620]'
                 : 'bg-white text-[#24211D] border-[#D6CEBE] hover:border-[#8C5A37] hover:bg-[#F5EFE6]'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 text-[#8C5A37]" />
-            <span>Dye Journal</span>
+            <span className="hidden sm:inline">Dye Journal</span>
             <span className="font-mono text-[11px] text-[#786D5E] bg-[#EFE9DD] px-1.5 py-0.2 rounded">
               {journalCount}
             </span>
@@ -77,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, journ
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-[#5A5044] hover:text-[#1C1917] focus-visible:outline-none"
+            className="lg:hidden p-2 text-[#5A5044] hover:text-[#1F1A15] focus-visible:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -99,6 +114,16 @@ export const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate, journ
               {link.label}
             </button>
           ))}
+          <button
+            onClick={() => {
+              onOpenAiChat();
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center justify-center gap-2 py-2.5 text-xs font-medium rounded bg-[#8C5A37] text-white mt-1 cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Open AI Dyer Assistant</span>
+          </button>
         </div>
       )}
     </header>

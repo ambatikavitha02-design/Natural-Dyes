@@ -16,6 +16,8 @@ import { ModifierLab } from './components/ModifierLab';
 import { DiyGuides } from './components/DiyGuides';
 import { DyeJournal } from './components/DyeJournal';
 import { Footer } from './components/Footer';
+import { AiChatDrawer } from './components/AiChatDrawer';
+import { Sparkles, MessageSquare } from 'lucide-react';
 
 const INITIAL_JOURNAL_ENTRIES: JournalEntry[] = [
   {
@@ -69,6 +71,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<string>('specimens');
   const [selectedSpecimen, setSelectedSpecimen] = useState<BotanicalDye | null>(null);
   const [calculatorDyeId, setCalculatorDyeId] = useState<string>('onion-skins');
+  const [isAiChatOpen, setIsAiChatOpen] = useState<boolean>(false);
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>(() => {
     try {
       const stored = localStorage.getItem('botanical_dye_journal');
@@ -126,6 +129,7 @@ export default function App() {
         activeSection={activeSection}
         onNavigate={handleNavigate}
         journalCount={journalEntries.length}
+        onOpenAiChat={() => setIsAiChatOpen(true)}
       />
 
       <main className="flex-1">
@@ -177,11 +181,32 @@ export default function App() {
         />
       </main>
 
+      {/* Floating Quick Action Button for AI Chat */}
+      <div className="fixed bottom-6 right-6 z-30">
+        <button
+          onClick={() => setIsAiChatOpen(true)}
+          className="flex items-center gap-2.5 px-4 py-3 bg-[#2B2620] text-[#FAF7F2] rounded-full shadow-lg hover:bg-[#433B32] transition-all hover:scale-105 cursor-pointer border border-[#8C5A37]/30 group"
+          title="Open Botanical Dye AI Agent"
+        >
+          <div className="relative">
+            <Sparkles className="w-4 h-4 text-[#C5A337]" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+          </div>
+          <span className="text-xs font-medium font-sans pr-1">Ask AI Dyer</span>
+        </button>
+      </div>
+
       {/* Specimen Modal Dossier */}
       <SpecimenModal
         specimen={selectedSpecimen}
         onClose={() => setSelectedSpecimen(null)}
         onOpenCalculatorWithDye={handleOpenCalculatorWithDye}
+      />
+
+      {/* Interactive AI Chat Drawer connected to n8n Webhook */}
+      <AiChatDrawer
+        isOpen={isAiChatOpen}
+        onClose={() => setIsAiChatOpen(false)}
       />
 
       {/* Quiet Archival Footer */}

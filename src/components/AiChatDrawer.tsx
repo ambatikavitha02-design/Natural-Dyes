@@ -15,14 +15,14 @@ interface AiChatDrawerProps {
   onClose: () => void;
 }
 
-const DEFAULT_WEBHOOK_URL = 'https://kavithaambati.app.n8n.cloud/webhook/41223b03-4eae-4376-bee4-81a1529f0c46/chat';
-const TEST_WEBHOOK_URL = 'https://kavithaambati.app.n8n.cloud/webhook-test/41223b03-4eae-4376-bee4-81a1529f0c46/chat';
+const DEFAULT_WEBHOOK_URL = 'https://kavithaambati.app.n8n.cloud/webhook/cda1ae31-e0a0-429d-ab5a-32c6264bbfdf/chat';
+const TEST_WEBHOOK_URL = 'https://kavithaambati.app.n8n.cloud/webhook-test/cda1ae31-e0a0-429d-ab5a-32c6264bbfdf/chat';
 
 export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({ isOpen, onClose }) => {
   const [webhookUrl, setWebhookUrl] = useState<string>(() => {
     const stored = localStorage.getItem('botanical_n8n_webhook_url');
-    // If stored was the previous webhook, automatically migrate to the new active one
-    if (stored && stored.includes('dfc04fbe-bdd5-422d-b6a8-75acb334e492')) {
+    // If stored was any of the previous webhooks, automatically migrate to the new active one
+    if (stored && (stored.includes('dfc04fbe-bdd5-422d-b6a8-75acb334e492') || stored.includes('41223b03-4eae-4376-bee4-81a1529f0c46'))) {
       localStorage.setItem('botanical_n8n_webhook_url', DEFAULT_WEBHOOK_URL);
       return DEFAULT_WEBHOOK_URL;
     }
@@ -233,7 +233,7 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({ isOpen, onClose }) =
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="n8n webhook active" />
               </div>
               <p className="text-[11px] font-mono text-[#8C7E6D]">
-                n8n Cloud Webhook: 41223b03...
+                n8n Cloud Webhook: cda1ae31...
               </p>
             </div>
           </div>
@@ -404,7 +404,7 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({ isOpen, onClose }) =
             </button>
           </form>
           <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-[#8C7E6D]">
-            <span>N8N CLOUD: 41223b03.../chat</span>
+            <span>N8N CLOUD: cda1ae31.../chat</span>
             <span>PRESS ENTER TO SEND</span>
           </div>
         </div>
